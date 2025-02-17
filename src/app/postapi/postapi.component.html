@@ -1,0 +1,42 @@
+<div class="form-container">
+    <form [formGroup]="productForm" (ngSubmit)="submitForm()">
+      <h2 class="form-title">Add Product</h2>
+  
+      <div class="form-group">
+        <label for="title">Product Title</label>
+        <input type="text" class="form-control" id="title" formControlName="title" placeholder="Enter product title" />
+      </div>
+  
+      <div class="form-group">
+        <label for="price">Price ($)</label>
+        <input type="number" class="form-control" id="price" formControlName="price" placeholder="Enter price" />
+      </div>
+  
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" formControlName="description" placeholder="Enter product description"></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="image">Image URL</label>
+        <input type="url" class="form-control" id="image" formControlName="image" placeholder="Enter product image URL" />
+      </div>
+  
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select class="form-control" id="category" formControlName="category">
+          <option value="" disabled selected>Select a category</option>
+          <option value="electronics">Electronics</option>
+          <option value="clothing">Clothing</option>
+          <option value="furniture">Furniture</option>
+          <option value="books">Books</option>
+          <option value="toys">Toys</option>
+        </select>
+      </div>
+  
+      <div class="form-group btn-container">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </div>
+  
