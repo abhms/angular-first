@@ -1,27 +1,34 @@
-import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { selectPosts, selectLoading, selectError } from './../store/post.selectors';
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { loadPosts } from '../store/post.actions';
+import { Post } from '../store/post.model';
+import { CommonModule } from '@angular/common'; 
 
 @Component({
   selector: 'app-getapi',
-  standalone: true,
-  imports: [CommonModule], 
   templateUrl: './getapi.component.html',
   styleUrls: ['./getapi.component.css'],
+  imports: [CommonModule],
 })
 export class GetapiComponent implements OnInit {
-  data: any[] = []; 
+  posts$: Observable<Post[]>;
+  loading$: Observable<boolean>;
+  error$: Observable<string | null>;
+  data: Post[] = []; 
 
-  constructor(private http: HttpClient) {}
+  constructor(private store: Store) {
+    this.posts$ = this.store.select(selectPosts);
+    this.loading$ = this.store.select(selectLoading);
+    this.error$ = this.store.select(selectError);
+  }
 
   ngOnInit() {
-    this.http.get<any[]>('https://jsonplaceholder.typicode.com/posts').subscribe(
-      (response) => {
-        this.data = response;
-      },
-      (error) => {
-        console.error('Error fetching data:', error);
-      }
-    );
+    this.store.dispatch(loadPosts());
+
+    this.posts$.subscribe((posts) => {
+      this.data = posts;
+    });
   }
 }
